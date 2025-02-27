@@ -11,4 +11,7 @@ public interface CustomerService {
 	public List<CustomerDto> getAllCustomer();
 
 	public CustomerDto getCustomer(int id);
+
+	public CustomerDto deleteCustomer(int id);
+
 }

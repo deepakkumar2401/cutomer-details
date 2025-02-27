@@ -34,7 +34,8 @@ public class CustomerController {
 
     @DeleteMapping("/delete-customer/{id}")
     public ResponseEntity<ResponseDto> deleteCustomer(@PathVariable("id") int id) {
-        return ResponseEntity.ok(new ResponseDto(false, "Customer Delete Successfully......", null));
+        return ResponseEntity
+                .ok(new ResponseDto(false, "Customer Delete Successfully......", customerService.deleteCustomer(id)));
     }
 
 }

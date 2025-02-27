@@ -59,4 +59,16 @@ public class CustomerServiceImpl implements CustomerService {
         return customerDto;
     }
 
+    @Override
+    public CustomerDto deleteCustomer(int id) {
+        Customer byCusId = customerRepository.findByCusId(id);
+        if (byCusId != null) {
+            customerRepository.deleteById(id);
+            CustomerDto customerDto = new CustomerDto();
+            BeanUtils.copyProperties(byCusId, customerDto);
+            return customerDto;
+        }
+        throw new DataNotFoundException("Customer not found with this id......");
+    }
+
 }
