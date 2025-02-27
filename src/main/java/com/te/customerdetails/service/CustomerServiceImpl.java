@@ -16,47 +16,47 @@ import com.te.customerdetails.repository.CustomerRepository;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
-	@Autowired
-	private CustomerRepository customerRepository;
+    @Autowired
+    private CustomerRepository customerRepository;
 
-	@Override
-	public CustomerDto register(CustomerDto customerDto) {
-		Optional<Customer> optionalCustomer = customerRepository.findById(customerDto.getCusId());
-		if (optionalCustomer.isEmpty()) {
-			Customer customer = new Customer();
-			BeanUtils.copyProperties(customerDto, customer);
-			Customer newCustomerEntity = customerRepository.save(customer);
-			customerDto.setCusId(newCustomerEntity.getCusId());
-			BeanUtils.copyProperties(newCustomerEntity, customerDto);
-			return customerDto;
-		}
-		throw new DataFoundException("Customer already present with this id:" + customerDto.getCusId());
-	}
+    @Override
+    public CustomerDto register(CustomerDto customerDto) {
+        Optional<Customer> optionalCustomer = customerRepository.findById(customerDto.getCusId());
+        if (optionalCustomer.isEmpty()) {
+            Customer customer = new Customer();
+            BeanUtils.copyProperties(customerDto, customer);
+            Customer newCustomerEntity = customerRepository.save(customer);
+            customerDto.setCusId(newCustomerEntity.getCusId());
+            BeanUtils.copyProperties(newCustomerEntity, customerDto);
+            return customerDto;
+        }
+        throw new DataFoundException("Customer already present with this id:" + customerDto.getCusId());
+    }
 
-	@Override
-	public List<CustomerDto> getAllCustomer() {
-		List<Customer> customerList = customerRepository.findAll();
-		if (customerList.isEmpty()) {
-			throw new DataFoundException("customers not present.....");
-		}
-		List<CustomerDto> customerDtoList = new ArrayList<>();
-		for (Customer customer : customerList) {
-			CustomerDto customerDto = new CustomerDto();
-			BeanUtils.copyProperties(customer, customerDto);
-			customerDtoList.add(customerDto);
-		}
-		return customerDtoList;
-	}
+    @Override
+    public List<CustomerDto> getAllCustomer() {
+        List<Customer> customerList = customerRepository.findAll();
+        if (customerList.isEmpty()) {
+            throw new DataFoundException("customers not present.....");
+        }
+        List<CustomerDto> customerDtoList = new ArrayList<>();
+        for (Customer customer : customerList) {
+            CustomerDto customerDto = new CustomerDto();
+            BeanUtils.copyProperties(customer, customerDto);
+            customerDtoList.add(customerDto);
+        }
+        return customerDtoList;
+    }
 
-	@Override
-	public CustomerDto getCustomer(int id) {
-		Customer byCusId = customerRepository.findByCusId(id);
-		if (byCusId == null) {
-			throw new DataNotFoundException("Customer Not present.....");
-		}
-		CustomerDto customerDto = new CustomerDto();
-		BeanUtils.copyProperties(byCusId, customerDto);
-		return customerDto;
-	}
+    @Override
+    public CustomerDto getCustomer(int id) {
+        Customer byCusId = customerRepository.findByCusId(id);
+        if (byCusId == null) {
+            throw new DataNotFoundException("Customer Not present.....");
+        }
+        CustomerDto customerDto = new CustomerDto();
+        BeanUtils.copyProperties(byCusId, customerDto);
+        return customerDto;
+    }
 
 }
