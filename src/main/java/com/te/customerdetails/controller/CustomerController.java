@@ -38,4 +38,10 @@ public class CustomerController {
                 .ok(new ResponseDto(false, "Customer Delete Successfully......", customerService.deleteCustomer(id)));
     }
 
+    @PatchMapping("/update-customer/{id}")
+    public ResponseEntity<ResponseDto> updateCustomer(@PathVariable("id") int id, @RequestBody CustomerDto customerDto) {
+        return ResponseEntity
+                .ok(new ResponseDto(false, "Customer Update Successfully.....", customerService.updateCustomer(id, customerDto)));
+    }
+
 }

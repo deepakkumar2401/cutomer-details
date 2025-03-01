@@ -71,4 +71,17 @@ public class CustomerServiceImpl implements CustomerService {
         throw new DataNotFoundException("Customer not found with this id......");
     }
 
+    @Override
+    public CustomerDto updateCustomer(int id, CustomerDto customerDto) {
+        Customer byCusId = customerRepository.findByCusId(id);
+        if (byCusId != null) {
+            BeanUtils.copyProperties(customerDto, byCusId);
+            byCusId.setCusId(id);
+            Customer save = customerRepository.save(byCusId);
+            BeanUtils.copyProperties(save, customerDto);
+            return customerDto;
+        }
+        throw new DataNotFoundException("Customer Not found with this id....");
+    }
+
 }
